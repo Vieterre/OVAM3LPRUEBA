@@ -1,8 +1,8 @@
 .env
+*.db
 __pycache__/
 .pytest_cache/
-.venv/
+.venv*/
 *.py[cod]
 backend/.pytest_cache/
 backend/.coverage
-

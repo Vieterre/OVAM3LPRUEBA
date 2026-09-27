@@ -1,0 +1,10 @@
+{$SITE_ADDRESS} {
+	encode zstd gzip
+	basic_auth {
+		{$PILOT_USER} {$PILOT_PASSWORD_HASH}
+	}
+	@api path /v1/* /healthz
+	reverse_proxy @api backend:8000
+	root * /srv
+	file_server
+}

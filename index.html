@@ -2781,7 +2781,6 @@
       color: #ffffff;
       background: #176b3a;
     }
-    html[data-theme="light"] #input-consent { accent-color: #176b3a; }
     html[data-theme="light"] .grid-bg-miv {
       background-image: none !important;
       background-color: #eef3f7 !important;
@@ -3820,81 +3819,43 @@
       <p class="ova-prose">Esta herramienta interactiva fortalece la comprensión del Modelo de las Tres Líneas. Su recorrido conecta los órganos de gobierno, la gestión operativa del riesgo, la supervisión y la auditoría interna para promover el autocontrol y la mejora continua en la Alcaldía Distrital de Barranquilla.</p>
     </div>
 
+    <div class="mb-5 rounded-xl border border-amber-400/30 bg-amber-400/10 p-3 text-left text-xs leading-relaxed text-amber-100" role="note">
+      <strong class="block mb-1">Ambiente de pruebas</strong>
+      Usa únicamente una identidad ficticia y la clave de prueba entregada por quien administra el VPS. El acceso institucional aún no está conectado.
+    </div>
     <form id="form-login" class="space-y-4">
-      <div class="grid gap-4 sm:grid-cols-2">
-        <div class="text-left">
-          <label for="input-first-name" class="block text-[10px] font-black uppercase text-slate-300 tracking-wider mb-2">Nombre(s)</label>
-          <input id="input-first-name" type="text" required autocomplete="given-name" aria-describedby="error-first-name" placeholder="Ingresa tu nombre" class="w-full bg-navy-950 border border-slate-700 focus:border-baq-verde focus:ring-2 focus:ring-baq-verde/20 rounded-xl px-4 py-3 text-white outline-none placeholder-slate-500 transition-all font-medium text-sm" />
-          <p id="error-first-name" class="text-rose-400 text-xs mt-1 hidden">Por favor ingresa tu nombre.</p>
-        </div>
-        <div class="text-left">
-          <label for="input-last-name" class="block text-[10px] font-black uppercase text-slate-300 tracking-wider mb-2">Apellido(s)</label>
-          <input id="input-last-name" type="text" required autocomplete="family-name" aria-describedby="error-last-name" placeholder="Ingresa tu apellido" class="w-full bg-navy-950 border border-slate-700 focus:border-baq-verde focus:ring-2 focus:ring-baq-verde/20 rounded-xl px-4 py-3 text-white outline-none placeholder-slate-500 transition-all font-medium text-sm" />
-          <p id="error-last-name" class="text-rose-400 text-xs mt-1 hidden">Por favor ingresa tu apellido.</p>
-        </div>
-      </div>
       <div class="text-left">
-        <label for="input-process" class="block text-[10px] font-black uppercase text-slate-300 tracking-wider mb-2">Proceso institucional</label>
-        <select id="input-process" required class="w-full bg-navy-950 border border-slate-700 focus:border-baq-verde focus:ring-2 focus:ring-baq-verde/20 rounded-xl px-4 py-3 text-white outline-none transition-all font-medium text-sm">
-          <option value="" selected disabled>Selecciona el proceso al que perteneces</option>
-          <option value="Direccionamiento Estratégico y Planeación">Direccionamiento Estratégico y Planeación</option>
-          <option value="Gestión de Recursos Financieros">Gestión de Recursos Financieros</option>
-          <option value="Gestión de las Tecnologías e Información">Gestión de las Tecnologías e Información</option>
-          <option value="Gestión de la Comunicación">Gestión de la Comunicación</option>
-          <option value="Gestión de la Salud">Gestión de la Salud</option>
-          <option value="Gestión del Servicio Educativo">Gestión del Servicio Educativo</option>
-          <option value="Gestión de Recreación y Deporte">Gestión de Recreación y Deporte</option>
-          <option value="Gestión Cultural y Patrimonio">Gestión Cultural y Patrimonio</option>
-          <option value="Gestión y Desarrollo Social">Gestión y Desarrollo Social</option>
-          <option value="Ordenamiento y Desarrollo Físico">Ordenamiento y Desarrollo Físico</option>
-          <option value="Gestión del Diseño y Control de Obras">Gestión del Diseño y Control de Obras</option>
-          <option value="Gestión de Tránsito y Seguridad Vial">Gestión de Tránsito y Seguridad Vial</option>
-          <option value="Hábitat">Hábitat</option>
-          <option value="Gestión de la Seguridad">Gestión de la Seguridad</option>
-          <option value="Fortalecimiento a la Justicia">Fortalecimiento a la Justicia</option>
-          <option value="Gestión del Riesgo de Emergencias y Desastres">Gestión del Riesgo de Emergencias y Desastres</option>
-          <option value="Gestión del Turismo">Gestión del Turismo</option>
-          <option value="Gestión del Desarrollo Económico">Gestión del Desarrollo Económico</option>
-          <option value="Atención al Ciudadano">Atención al Ciudadano</option>
-          <option value="Participación Ciudadana">Participación Ciudadana</option>
-          <option value="Gestión Humana y SST">Gestión Humana y Seguridad y Salud en el Trabajo (SST)</option>
-          <option value="Gestión Jurídica">Gestión Jurídica</option>
-          <option value="Gestión de la Contratación">Gestión de la Contratación</option>
-          <option value="Gestión de la Infraestructura Física">Gestión de la Infraestructura Física</option>
-          <option value="Gestión Documental">Gestión Documental</option>
-          <option value="Gestión Disciplinaria">Gestión Disciplinaria</option>
-          <option value="Evaluación Independiente">Evaluación Independiente</option>
+        <label for="input-test-user" class="block text-[10px] font-black uppercase text-slate-300 tracking-wider mb-2">Identidad ficticia</label>
+        <select id="input-test-user" required class="w-full bg-navy-950 border border-slate-700 focus:border-baq-verde focus:ring-2 focus:ring-baq-verde/20 rounded-xl px-4 py-3 text-white outline-none transition-all font-medium text-sm">
+          <option value="test-agent-001">Participante de prueba 01</option>
+          <option value="test-agent-002">Participante de prueba 02</option>
+          <option value="test-agent-003">Participante de prueba 03</option>
+          <option value="test-agent-004">Participante de prueba 04</option>
+          <option value="test-agent-005">Participante de prueba 05</option>
+          <option value="test-agent-006">Participante de prueba 06</option>
+          <option value="test-agent-007">Participante de prueba 07</option>
+          <option value="test-agent-008">Participante de prueba 08</option>
+          <option value="test-agent-009">Participante de prueba 09</option>
+          <option value="test-agent-010">Participante de prueba 10</option>
+          <option value="test-agent-011">Participante de prueba 11</option>
+          <option value="test-agent-012">Participante de prueba 12</option>
+          <option value="test-agent-013">Participante de prueba 13</option>
+          <option value="test-agent-014">Participante de prueba 14</option>
+          <option value="test-agent-015">Participante de prueba 15</option>
+          <option value="test-agent-016">Participante de prueba 16</option>
+          <option value="test-agent-017">Participante de prueba 17</option>
+          <option value="test-agent-018">Participante de prueba 18</option>
+          <option value="test-agent-019">Participante de prueba 19</option>
+          <option value="test-agent-020">Participante de prueba 20</option>
         </select>
-        <p id="error-process" class="text-rose-400 text-xs mt-1 hidden">Por favor selecciona el proceso institucional.</p>
       </div>
       <div class="text-left">
-        <label for="input-level" class="block text-[10px] font-black uppercase text-slate-300 tracking-wider mb-2">Nivel del empleo</label>
-        <select id="input-level" required class="w-full bg-navy-950 border border-slate-700 focus:border-baq-verde focus:ring-2 focus:ring-baq-verde/20 rounded-xl px-4 py-3 text-white outline-none transition-all font-medium text-sm">
-          <option value="" selected disabled>Selecciona el nivel del empleo</option>
-          <option value="Directivo">Directivo</option>
-          <option value="Asesor">Asesor</option>
-          <option value="Profesional">Profesional</option>
-          <option value="Técnico">Técnico</option>
-          <option value="Asistencial">Asistencial</option>
-        </select>
-        <p id="error-level" class="text-rose-400 text-xs mt-1 hidden">Por favor selecciona el nivel del empleo.</p>
+        <label for="input-test-secret" class="block text-[10px] font-black uppercase text-slate-300 tracking-wider mb-2">Clave compartida de prueba</label>
+        <input id="input-test-secret" type="password" required autocomplete="current-password" minlength="32" placeholder="Solicita la clave al administrador del VPS" class="w-full bg-navy-950 border border-slate-700 focus:border-baq-verde focus:ring-2 focus:ring-baq-verde/20 rounded-xl px-4 py-3 text-white outline-none placeholder-slate-500 transition-all font-medium text-sm" />
+        <p class="mt-1 text-[11px] text-slate-500">No la guardamos en el navegador ni en el repositorio.</p>
       </div>
-      <div class="text-left">
-        <label for="input-email" class="block text-[10px] font-black uppercase text-slate-300 tracking-wider mb-2">Correo electrónico</label>
-        <input id="input-email" type="email" required autocomplete="email" inputmode="email" pattern="[A-Za-z0-9._%+-]+@barranquilla\.gov\.co" aria-describedby="email-help error-email" placeholder="nombre@barranquilla.gov.co" class="w-full bg-navy-950 border border-slate-700 focus:border-baq-verde focus:ring-2 focus:ring-baq-verde/20 rounded-xl px-4 py-3 text-white outline-none placeholder-slate-500 transition-all font-medium text-sm" />
-        <p id="email-help" class="mt-1 text-[11px] text-slate-500">Utiliza únicamente tu correo institucional.</p>
-        <p id="error-email" class="text-rose-400 text-xs mt-1 hidden">Ingresa un correo institucional terminado en @barranquilla.gov.co.</p>
-      </div>
-      <div class="rounded-2xl border border-baq-verde/30 bg-baq-verde/5 p-4 text-left" role="note" aria-labelledby="privacy-title">
-        <strong id="privacy-title" class="block text-[10px] font-black uppercase tracking-wider text-baq-verde">Aviso de privacidad y autorización</strong>
-        <p id="privacy-description" class="mt-2 text-xs leading-relaxed text-slate-300">Los datos suministrados serán tratados por la Gerencia de Control Interno de Gestión exclusivamente para fines de trazabilidad y seguimiento de la participación, así como para conocer el estado de avance de los funcionarios en el desarrollo de la OVA.</p>
-        <label for="input-consent" class="mt-3 flex cursor-pointer items-start gap-3 text-xs leading-relaxed text-slate-200">
-          <input id="input-consent" type="checkbox" required aria-describedby="privacy-description error-consent" class="mt-0.5 h-4 w-4 shrink-0 accent-[#279848]" />
-          <span>He leído el aviso de privacidad y autorizo el tratamiento de mis datos para las finalidades indicadas.</span>
-        </label>
-        <p id="error-consent" class="text-rose-400 text-xs mt-2 hidden">Debes aceptar la autorización para registrar e ingresar al OVA.</p>
-      </div>
-      <button id="login-submit" type="submit" class="w-full bg-baq-verde hover:bg-emerald-500 disabled:opacity-60 disabled:cursor-wait text-white font-black py-4 px-6 rounded-xl shadow-lg transition-all duration-200 active:scale-95 text-xs tracking-widest uppercase">Registrar e ingresar al OVA</button>
+      <button id="login-submit" type="submit" class="w-full bg-baq-verde hover:bg-emerald-500 disabled:opacity-60 disabled:cursor-wait text-white font-black py-4 px-6 rounded-xl shadow-lg transition-all duration-200 active:scale-95 text-xs tracking-widest uppercase">Ingresar a la prueba</button>
+      <p id="login-error" role="alert" class="text-rose-400 text-xs hidden"></p>
     </form>
 
     <div class="mt-8 border-t border-slate-800 pt-4 flex justify-between items-center text-[9px] text-slate-400 gap-4">
@@ -4627,50 +4588,100 @@ const AppState = {
 
 MODULES.forEach(m => { AppState.modules[m.id] = { score: 0, completed: false, resourceAccess: false, resourceTypes: [] }; });
 
-const SheetsSync = {
-  endpoint: 'https://script.google.com/macros/s/AKfycbyOKn5KGg-RUtdwP39DV21k_QZNpIYCf8ylHP3kTVZk8PSDbchNQJWf3opwBcaZU8FX/exec',
+const BackendSync = {
+  courseId: 'modelo-tres-lineas',
+  courseVersion: 'pilot-1',
+  token: null,
+  subjectId: null,
+  timer: null,
   inFlight: false,
-  lastFingerprint: '',
-  sessionId: '',
-  getSessionId() {
-    if (this.sessionId) return this.sessionId;
-    this.sessionId = (window.crypto && typeof window.crypto.randomUUID === 'function')
-      ? window.crypto.randomUUID()
-      : `ova-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
-    return this.sessionId;
+  queued: false,
+  async request(path, options = {}) {
+    const headers = new Headers(options.headers || {});
+    if (this.token) headers.set('Authorization', `Bearer ${this.token}`);
+    if (options.body) headers.set('Content-Type', 'application/json');
+    const response = await fetch(path, { ...options, headers, cache: 'no-store' });
+    if (!response.ok) {
+      const detail = await response.json().catch(() => ({}));
+      throw new Error(detail.detail || `El servidor respondió ${response.status}`);
+    }
+    return response.status === 204 ? null : response.json();
   },
-  async sendRegistration({ firstName, lastName, name, process, level, email, consent }) {
-    const fingerprint = JSON.stringify([firstName, lastName, process, level, email]);
-    if (this.inFlight || this.lastFingerprint === fingerprint) return { skipped: true };
-
-    this.inFlight = true;
-    const payload = {
-      nombre: name,
-      nombres: firstName,
-      apellidos: lastName,
-      proceso: process,
-      nivel_empleo: level,
-      correo_electronico: email,
-      consentimiento_privacidad: consent ? 'Sí' : 'No',
-      finalidad_tratamiento: 'Trazabilidad, seguimiento y conocimiento del estado y desarrollo del curso por parte de los usuarios',
-      id_sesion: this.getSessionId(),
-      fecha_cliente: new Date().toISOString(),
-      origen: 'OVA Modelo de las Tres Líneas'
-    };
-
+  async signIn(userId, secret) {
+    const session = await this.request('/v1/dev/session', {
+      method: 'POST',
+      headers: { 'X-Dev-Test-Secret': secret },
+      body: JSON.stringify({ user_id: userId })
+    });
+    this.token = session.access_token;
+    this.subjectId = session.user_id;
+    await this.request('/v1/me/entry', {
+      method: 'POST',
+      body: JSON.stringify({ course_id: this.courseId, course_version: this.courseVersion })
+    });
     try {
-      await fetch(this.endpoint, {
-        method: 'POST',
-        mode: 'no-cors',
-        cache: 'no-store',
-        keepalive: true,
-        headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
-        body: JSON.stringify(payload)
-      });
-      this.lastFingerprint = fingerprint;
-      return { sent: true };
+      const query = new URLSearchParams({ course_id: this.courseId, course_version: this.courseVersion });
+      this.restore(await this.request(`/v1/me/progress?${query}`));
+    } catch (error) {
+      if (!String(error.message).includes('Aún no hay avance guardado')) throw error;
+    }
+    return session;
+  },
+  restore(progress) {
+    (progress.modules || []).forEach(module => {
+      if (!AppState.modules[module.module_id]) return;
+      AppState.modules[module.module_id] = {
+        score: Number(module.score || 0),
+        completed: module.status === 'completed',
+        resourceAccess: Boolean(module.required_resources_opened),
+        resourceTypes: Array.isArray(module.resource_types) ? module.resource_types : []
+      };
+    });
+  },
+  snapshot() {
+    const ids = ['m1', 'm2', 'm3', 'm4', 'm5'];
+    const modules = ids.map(moduleId => {
+      const module = AppState.modules[moduleId] || {};
+      const started = Number(module.score || 0) > 0 || Boolean(module.resourceAccess);
+      return {
+        module_id: moduleId,
+        status: module.completed ? 'completed' : started ? 'in_progress' : 'not_started',
+        score: Number.isFinite(Number(module.score)) ? Math.max(0, Math.min(100, Math.round(Number(module.score)))) : null,
+        attempts: null,
+        required_resources_opened: Boolean(module.resourceAccess),
+        resource_types: Array.isArray(module.resourceTypes) ? module.resourceTypes : []
+      };
+    });
+    return {
+      course_id: this.courseId,
+      course_version: this.courseVersion,
+      status: modules.every(module => module.status === 'completed') ? 'completed' : 'in_progress',
+      modules
+    };
+  },
+  scheduleSave() {
+    if (!this.token) return;
+    clearTimeout(this.timer);
+    this.timer = setTimeout(() => this.flush(), 700);
+  },
+  async flush(keepalive = false) {
+    if (!this.token) return;
+    if (this.inFlight) {
+      this.queued = true;
+      return;
+    }
+    this.inFlight = true;
+    try {
+      await this.request('/v1/me/progress', { method: 'PUT', body: JSON.stringify(this.snapshot()), keepalive });
+    } catch (error) {
+      console.warn('No fue posible sincronizar el avance con el backend.', error);
+      showToast('No se pudo sincronizar el avance. Mantén abierta esta pestaña y avisa al administrador.', 'error');
     } finally {
       this.inFlight = false;
+      if (this.queued) {
+        this.queued = false;
+        this.scheduleSave();
+      }
     }
   }
 };
@@ -5611,38 +5622,14 @@ const TimeTracker = {
 };
 
 const Storage = {
-  key: 'ova_lineas_defensa_meci_v6_modulos_1_a_5_proceso_nivel_tiempo',
+  key: 'ova-pilot-test-user',
   save() {
-    const payload = {
-      user: { firstName: AppState.user.firstName || '', lastName: AppState.user.lastName || '', name: AppState.user.name || '', process: AppState.user.process || '', level: AppState.user.level || '', email: AppState.user.email || '', consent: Boolean(AppState.user.consent) },
-      currentPane: AppState.currentPane,
-      modules: AppState.modules,
-      timer: { startedAt: AppState.timer.startedAt || null }
-    };
-    localStorage.setItem(this.key, JSON.stringify(payload));
+    BackendSync.scheduleSave();
   },
   load() {
-    try {
-      const raw = localStorage.getItem(this.key);
-      if (!raw) return;
-      const data = JSON.parse(raw);
-      if (data && data.modules) {
-        AppState.user = { firstName: AppState.user.firstName || data.user?.firstName || '', lastName: AppState.user.lastName || data.user?.lastName || '', name: AppState.user.name || data.user?.name || '', process: AppState.user.process || data.user?.process || '', level: AppState.user.level || data.user?.level || '', email: AppState.user.email || data.user?.email || '', consent: Boolean(AppState.user.consent || data.user?.consent) };
-        if (!AppState.timer.startedAt && data.timer?.startedAt) AppState.timer.startedAt = Number(data.timer.startedAt) || null;
-        Object.keys(AppState.modules).forEach(k => {
-          if (data.modules[k]) {
-            AppState.modules[k] = {
-              score: Number(data.modules[k].score || 0),
-              completed: Boolean(data.modules[k].completed),
-              resourceAccess: Boolean(data.modules[k].resourceAccess),
-              resourceTypes: Array.isArray(data.modules[k].resourceTypes) ? data.modules[k].resourceTypes.filter(Boolean) : []
-            };
-          }
-        });
-      }
-    } catch (e) { console.warn('No se pudo cargar progreso', e); }
+    // El progreso oficial del piloto se restaura desde el backend después de autenticar.
   },
-  clear() { localStorage.removeItem(this.key); }
+  clear() { }
 };
 
 const ResourceTracker = {
@@ -7286,116 +7273,61 @@ document.addEventListener('change', function(event) {
 
 document.getElementById('form-login').addEventListener('submit', function(e) {
   e.preventDefault();
-  if (SheetsSync.inFlight) return;
-  const firstName = document.getElementById('input-first-name').value.trim().replace(/\s+/g, ' ');
-  const lastName = document.getElementById('input-last-name').value.trim().replace(/\s+/g, ' ');
-  const name = `${firstName} ${lastName}`.trim();
-  const process = document.getElementById('input-process').value.trim();
-  const level = document.getElementById('input-level').value.trim();
-  const emailInput = document.getElementById('input-email');
-  const email = emailInput.value.trim().toLowerCase();
-  emailInput.value = email;
-  const institutionalEmailPattern = /^[a-z0-9.!#$%&'*+/=?^_`{|}~-]+@barranquilla\.gov\.co$/i;
-  const consent = document.getElementById('input-consent').checked;
-  let valid = true;
-
-  if (firstName.length < 2) {
-    document.getElementById('input-first-name').setAttribute('aria-invalid', 'true');
-    document.getElementById('error-first-name').classList.remove('hidden');
-    valid = false;
-  } else {
-    document.getElementById('input-first-name').removeAttribute('aria-invalid');
-    document.getElementById('error-first-name').classList.add('hidden');
-  }
-
-  if (lastName.length < 2) {
-    document.getElementById('input-last-name').setAttribute('aria-invalid', 'true');
-    document.getElementById('error-last-name').classList.remove('hidden');
-    valid = false;
-  } else {
-    document.getElementById('input-last-name').removeAttribute('aria-invalid');
-    document.getElementById('error-last-name').classList.add('hidden');
-  }
-
-  if (!process) {
-    document.getElementById('error-process').classList.remove('hidden');
-    valid = false;
-  } else {
-    document.getElementById('error-process').classList.add('hidden');
-  }
-
-  if (!level) {
-    document.getElementById('error-level').classList.remove('hidden');
-    valid = false;
-  } else {
-    document.getElementById('error-level').classList.add('hidden');
-  }
-
-  if (!email || !emailInput.checkValidity() || !institutionalEmailPattern.test(email)) {
-    emailInput.setAttribute('aria-invalid', 'true');
-    document.getElementById('error-email').classList.remove('hidden');
-    valid = false;
-  } else {
-    emailInput.removeAttribute('aria-invalid');
-    document.getElementById('error-email').classList.add('hidden');
-  }
-
-  if (!consent) {
-    document.getElementById('input-consent').setAttribute('aria-invalid', 'true');
-    document.getElementById('error-consent').classList.remove('hidden');
-    valid = false;
-  } else {
-    document.getElementById('input-consent').removeAttribute('aria-invalid');
-    document.getElementById('error-consent').classList.add('hidden');
-  }
-
-  if (!valid) {
-    SoundSystem.error();
-    return;
-  }
-
+  if (BackendSync.inFlight) return;
+  const userId = document.getElementById('input-test-user').value;
+  const secretInput = document.getElementById('input-test-secret');
+  const secret = secretInput.value;
   const submitButton = document.getElementById('login-submit');
+  const errorNode = document.getElementById('login-error');
   if (submitButton) {
     submitButton.disabled = true;
     submitButton.textContent = 'Ingresando…';
   }
-
-  const remoteRegistration = SheetsSync.sendRegistration({ firstName, lastName, name, process, level, email, consent });
-
-  AppState.user = { firstName, lastName, name, process, level, email, consent };
-  AppState.timer.startedAt = Date.now();
-  document.getElementById('sidebar-user-name').textContent = name;
-  document.getElementById('sidebar-user-meta').textContent = `Proceso: ${process}`;
-  const sidebarLevel = document.getElementById('sidebar-user-level');
-  if (sidebarLevel) sidebarLevel.textContent = `Nivel del empleo: ${level}`;
-  refreshLearnerContext();
-  document.getElementById('screen-landing').classList.add('hidden');
-  document.getElementById('screen-app').classList.remove('hidden');
-  document.body.classList.add('app-active');
-  lockAppViewport();
-  SoundSystem.init();
-  SoundSystem.ok();
-  App.start();
-  showToast('Ingreso validado. Inicia el Módulo 1.');
-
-  remoteRegistration
-    .then(result => {
-      if (result?.sent) showToast('Datos de registro enviados a la base institucional.');
+  if (errorNode) errorNode.classList.add('hidden');
+  BackendSync.inFlight = true;
+  BackendSync.signIn(userId, secret)
+    .then(session => {
+      secretInput.value = '';
+      AppState.user = {
+        firstName: '', lastName: '', name: session.display_name,
+        process: 'Prueba técnica', level: 'Identidad ficticia', email: '', consent: false
+      };
+      AppState.timer.startedAt = Date.now();
+      document.getElementById('sidebar-user-name').textContent = session.display_name;
+      document.getElementById('sidebar-user-meta').textContent = 'Identidad ficticia de prueba';
+      const sidebarLevel = document.getElementById('sidebar-user-level');
+      if (sidebarLevel) sidebarLevel.textContent = 'Ambiente de pruebas';
+      refreshLearnerContext();
+      document.getElementById('screen-landing').classList.add('hidden');
+      document.getElementById('screen-app').classList.remove('hidden');
+      document.body.classList.add('app-active');
+      lockAppViewport();
+      SoundSystem.init();
+      SoundSystem.ok();
+      App.start();
+      showToast('Conectado al backend de pruebas.');
     })
     .catch(error => {
-      console.warn('No fue posible enviar el registro a Google Sheets.', error);
-      showToast('Sin conexión con la base. Tu ingreso y progreso continúan guardados localmente.', 'error');
+      BackendSync.token = null;
+      BackendSync.subjectId = null;
+      if (errorNode) {
+        errorNode.textContent = `No se pudo ingresar: ${error.message}. Verifica la clave y que el backend esté disponible.`;
+        errorNode.classList.remove('hidden');
+      }
+      SoundSystem.error();
     })
     .finally(() => {
+      BackendSync.inFlight = false;
       if (submitButton) {
         submitButton.disabled = false;
-        submitButton.textContent = 'Registrar e ingresar al OVA';
+        submitButton.textContent = 'Ingresar a la prueba';
       }
     });
 });
 
 window.addEventListener('beforeunload', () => {
-  Storage.save();
+  clearTimeout(BackendSync.timer);
+  if (BackendSync.token && !BackendSync.inFlight) BackendSync.flush(true);
 });
 
 const PreviewMode = {
@@ -7404,11 +7336,11 @@ const PreviewMode = {
   },
   openRecognition() {
     AppState.user = {
-      firstName: 'Geovanni',
-      lastName: 'Manzano',
-      name: 'Geovanni Manzano',
-      process: 'Gestión de Desarrollo Económico',
-      level: 'Profesional',
+      firstName: '',
+      lastName: '',
+      name: 'Participante de prueba',
+      process: 'Prueba técnica',
+      level: 'Identidad ficticia',
       email: '',
       consent: false
     };

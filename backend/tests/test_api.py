@@ -155,3 +155,22 @@ def test_invalid_score_is_rejected():
             },
         )
         assert response.status_code == 422
+
+
+def test_attempt_count_can_be_unknown_when_client_does_not_track_attempts():
+    with make_client() as client:
+        token = login(client)
+        response = client.put(
+            "/v1/me/progress",
+            headers={"Authorization": "Bearer " + token},
+            json={
+                "course_id": "modelo-tres-lineas",
+                "course_version": "pilot-1",
+                "status": "in_progress",
+                "modules": [
+                    {"module_id": "m1", "status": "not_started", "attempts": None}
+                ],
+            },
+        )
+        assert response.status_code == 200
+        assert response.json()["modules"][0]["attempts"] is None

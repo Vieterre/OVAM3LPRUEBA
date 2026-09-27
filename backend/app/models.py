@@ -43,9 +43,8 @@ class ModuleProgress(Base):
     module_id: Mapped[str] = mapped_column(String(32), nullable=False)
     status: Mapped[str] = mapped_column(String(20), nullable=False, default="not_started")
     score: Mapped[int | None] = mapped_column(Integer, nullable=True)
-    attempts: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    attempts: Mapped[int | None] = mapped_column(Integer, nullable=True, default=None)
     required_resources_opened: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
     resource_types: Mapped[list[str]] = mapped_column(JSON, nullable=False, default=list)
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=utc_now)
     learner_progress: Mapped[LearnerProgress] = relationship(back_populates="modules")
-

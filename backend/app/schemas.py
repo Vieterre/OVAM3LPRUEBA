@@ -30,7 +30,7 @@ class ModuleUpdate(BaseModel):
     module_id: str = Field(min_length=1, max_length=32, pattern=r"^[a-zA-Z0-9_-]+$")
     status: Literal["not_started", "in_progress", "completed"]
     score: int | None = Field(default=None, ge=0, le=100)
-    attempts: int = Field(default=0, ge=0, le=10000)
+    attempts: int | None = Field(default=None, ge=0, le=10000)
     required_resources_opened: bool = False
     resource_types: list[str] = Field(default_factory=list, max_length=20)
 

@@ -34,10 +34,35 @@ services:
     networks:
       - internal
 
+  caddy:
+    profiles: ["vps"]
+    image: caddy:2-alpine
+    restart: unless-stopped
+    environment:
+      SITE_ADDRESS: ${SITE_ADDRESS:?Define SITE_ADDRESS en .env}
+      PILOT_USER: ${PILOT_USER:?Define PILOT_USER en .env}
+      PILOT_PASSWORD_HASH: ${PILOT_PASSWORD_HASH:?Define PILOT_PASSWORD_HASH en .env}
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./index.html:/srv/index.html:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - backend
+    networks:
+      - internal
+      - edge
+
 volumes:
   ova_db_data:
+  caddy_data:
+  caddy_config:
 
 networks:
   internal:
     internal: true
-
+  edge:
