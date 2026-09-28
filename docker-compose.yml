@@ -17,7 +17,9 @@ services:
       - internal
 
   backend:
-    build: ./backend
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
     restart: unless-stopped
     environment:
       APP_ENV: ${APP_ENV:-development}
@@ -26,6 +28,13 @@ services:
       DEV_TEST_SECRET: ${DEV_TEST_SECRET:-}
       DATABASE_URL: postgresql+psycopg://ova:${POSTGRES_PASSWORD}@db:5432/ova
       CORS_ORIGINS: ${CORS_ORIGINS:-}
+      RAG_ENABLED: ${RAG_ENABLED:-true}
+      RAG_SOURCE_PATHS: ${RAG_SOURCE_PATHS:-rag_sources}
+      RAG_CHUNK_CHARS: ${RAG_CHUNK_CHARS:-1200}
+      RAG_CHUNK_OVERLAP: ${RAG_CHUNK_OVERLAP:-180}
+      RAG_EMBEDDING_DIMENSIONS: ${RAG_EMBEDDING_DIMENSIONS:-256}
+      RAG_TOP_K: ${RAG_TOP_K:-4}
+      RAG_MAX_QUESTION_CHARS: ${RAG_MAX_QUESTION_CHARS:-500}
     depends_on:
       db:
         condition: service_healthy

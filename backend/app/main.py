@@ -11,7 +11,17 @@ from .auth import TEST_USERS, AuthenticatedUser, build_auth_dependency, issue_to
 from .config import Settings
 from .database import Base, build_engine, build_session_factory
 from .models import LearnerProgress, ModuleProgress, utc_now
-from .schemas import DevSessionRequest, DevSessionResponse, EntryRequest, ProgressResponse, ProgressUpdate
+from .rag import answer_question, ingest_sources, rag_status
+from .schemas import (
+    DevSessionRequest,
+    DevSessionResponse,
+    EntryRequest,
+    ProgressResponse,
+    ProgressUpdate,
+    RagChatRequest,
+    RagChatResponse,
+    RagIngestResponse,
+)
 
 
 def _iso(value):
@@ -50,7 +60,7 @@ def create_app(settings=None, engine=None):
             allow_origins=settings.cors_origins,
             allow_credentials=False,
             allow_methods=["GET", "PUT", "POST"],
-            allow_headers=["Authorization", "Content-Type"],
+            allow_headers=["Authorization", "Content-Type", "X-Dev-Test-Secret"],
         )
 
     def get_db():
@@ -116,6 +126,46 @@ def create_app(settings=None, engine=None):
         db.commit()
         db.refresh(progress)
         return _to_response(progress)
+
+    @app.get("/v1/rag/status", tags=["rag"])
+    def get_rag_status(db: Session = Depends(get_db)):
+        if not settings.rag_enabled:
+            raise HTTPException(status_code=404, detail="RAG no habilitado")
+        return rag_status(db)
+
+    @app.post("/v1/rag/ingest", response_model=RagIngestResponse, tags=["rag"])
+    def ingest_rag_documents(
+        x_dev_test_secret: str | None = Header(default=None),
+        db: Session = Depends(get_db),
+    ):
+        if not settings.rag_enabled:
+            raise HTTPException(status_code=404, detail="RAG no habilitado")
+        if not settings.enable_test_auth or settings.app_env != "development" or settings.auth_mode != "mock":
+            raise HTTPException(status_code=404, detail="No encontrado")
+        if not x_dev_test_secret or not hmac.compare_digest(
+            x_dev_test_secret, settings.dev_test_secret
+        ):
+            raise HTTPException(status_code=401, detail="Credencial de prueba inválida")
+        result = ingest_sources(db, settings)
+        if result["documents"] == 0 or result["chunks"] == 0:
+            raise HTTPException(status_code=422, detail="No se encontraron fuentes válidas para ingerir")
+        return RagIngestResponse(**result)
+
+    @app.post("/v1/rag/chat", response_model=RagChatResponse, tags=["rag"])
+    def chat_with_rag(
+        request: RagChatRequest,
+        user: AuthenticatedUser = Depends(current_user),
+        db: Session = Depends(get_db),
+    ):
+        if not settings.rag_enabled:
+            raise HTTPException(status_code=404, detail="RAG no habilitado")
+        try:
+            result = answer_question(db, settings, user.subject_id, request.question)
+        except LookupError as error:
+            raise HTTPException(status_code=409, detail=str(error))
+        except ValueError as error:
+            raise HTTPException(status_code=422, detail=str(error))
+        return RagChatResponse(**result)
 
     @app.get("/v1/me/progress", response_model=ProgressResponse, tags=["progress"])
     def get_my_progress(

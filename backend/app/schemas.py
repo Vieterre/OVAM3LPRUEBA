@@ -72,3 +72,29 @@ class ProgressResponse(BaseModel):
     last_activity_at: str
     completed_at: str | None
     modules: list[ModuleProgressResponse]
+
+
+class RagIngestResponse(BaseModel):
+    documents: int
+    chunks: int
+    sources: list[str]
+
+
+class RagCitation(BaseModel):
+    source_id: str
+    title: str
+    locator: str
+    snippet: str
+    score: float
+
+
+class RagChatRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    question: str = Field(min_length=3, max_length=1200)
+
+
+class RagChatResponse(BaseModel):
+    answer: str
+    citations: list[RagCitation]
+    blocked: bool = False

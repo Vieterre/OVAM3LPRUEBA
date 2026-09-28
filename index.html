@@ -3246,7 +3246,63 @@
     }
 
     @media print {
-      .accessibility-toolbar, .acronym-dialog { display: none !important; }
+      .accessibility-toolbar, .acronym-dialog, .rag-assistant { display: none !important; }
+    }
+
+    .rag-assistant {
+      position: fixed;
+      left: 1.25rem;
+      bottom: 1.25rem;
+      z-index: 45;
+      width: min(92vw, 25rem);
+    }
+    .rag-assistant__panel {
+      display: none;
+      max-height: min(68vh, 34rem);
+      background: rgba(7, 30, 54, .96);
+      border: 1px solid rgba(123, 216, 244, .24);
+      box-shadow: 0 24px 70px rgba(0,0,0,.38);
+      overflow: hidden;
+    }
+    .rag-assistant.is-open .rag-assistant__panel { display: flex; }
+    .rag-assistant__messages {
+      min-height: 12rem;
+      max-height: 19rem;
+      overflow-y: auto;
+    }
+    .rag-message {
+      border: 1px solid rgba(148, 163, 184, .18);
+      background: rgba(15, 23, 42, .72);
+    }
+    .rag-message.is-user {
+      background: rgba(39, 152, 72, .14);
+      border-color: rgba(39, 152, 72, .32);
+    }
+    .rag-citation {
+      border-left: 3px solid #FFEA00;
+      background: rgba(255, 234, 0, .08);
+    }
+    .rag-assistant__toggle {
+      box-shadow: 0 16px 44px rgba(0,0,0,.32);
+    }
+    html[data-theme="light"] .rag-assistant__panel {
+      background: rgba(255, 255, 255, .98);
+      border-color: rgba(20, 35, 52, .18);
+      color: #142334;
+    }
+    html[data-theme="light"] .rag-assistant h2 { color: #142334 !important; }
+    html[data-theme="light"] .rag-message { background: #f4f8fb; color: #142334; }
+    html[data-theme="light"] .rag-message.is-user { background: #e8f4ec; }
+    html[data-theme="light"] .rag-citation { background: #fff8c7; color: #142334 !important; }
+    html[data-theme="light"] .rag-citation strong { color: #176b3a !important; }
+    @media (max-width: 720px) {
+      .rag-assistant {
+        left: .75rem;
+        right: .75rem;
+        bottom: .75rem;
+        width: auto;
+      }
+      .rag-assistant__messages { max-height: 15rem; }
     }
 
   </style>
@@ -4566,6 +4622,27 @@
 
 <div id="toast-container" class="fixed bottom-5 right-5 z-50 pointer-events-none flex flex-col space-y-2" aria-live="polite" aria-atomic="true"></div>
 
+<aside id="rag-assistant" class="rag-assistant" aria-label="Chat del OVA">
+  <div class="rag-assistant__panel flex-col rounded-2xl mb-3">
+    <div class="px-4 py-3 border-b border-slate-700/70 flex items-center justify-between gap-3">
+      <div>
+        <p class="text-[10px] uppercase tracking-wider font-black text-baq-amarillo">Chat/RAG piloto</p>
+        <h2 class="text-sm font-black text-white">Modelo de las Tres Líneas</h2>
+      </div>
+      <button id="rag-close" type="button" class="w-9 h-9 rounded-xl border border-slate-700 text-slate-200 hover:border-baq-amarillo" aria-label="Cerrar chat">×</button>
+    </div>
+    <div id="rag-messages" class="rag-assistant__messages soft-scroll p-4 space-y-3 text-sm" aria-live="polite"></div>
+    <form id="rag-form" class="p-4 border-t border-slate-700/70 space-y-3">
+      <label for="rag-question" class="sr-only">Pregunta para el chat del OVA</label>
+      <textarea id="rag-question" maxlength="500" rows="3" class="w-full rounded-xl bg-navy-950/80 border border-slate-700 px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-baq-amarillo" placeholder="Pregunta sobre roles, riesgos o independencia"></textarea>
+      <button id="rag-submit" type="submit" class="w-full rounded-xl bg-baq-verde text-white font-black text-xs uppercase tracking-wider py-3 hover:bg-green-700 disabled:opacity-60">Preguntar</button>
+    </form>
+  </div>
+  <button id="rag-toggle" type="button" class="rag-assistant__toggle inline-flex items-center gap-2 rounded-full bg-baq-amarillo text-navy-950 px-4 py-3 text-xs font-black uppercase tracking-wider hover:bg-yellow-300" aria-expanded="false">
+    Chat OVA
+  </button>
+</aside>
+
 <script>
 const LEARNING_ORDER = ['m1', 'm2', 'm3', 'm4', 'm5'];
 
@@ -4682,6 +4759,84 @@ const BackendSync = {
         this.queued = false;
         this.scheduleSave();
       }
+    }
+  }
+};
+
+const RagAssistant = {
+  open: false,
+  busy: false,
+  initialized: false,
+  init() {
+    if (this.initialized) return;
+    this.root = document.getElementById('rag-assistant');
+    this.toggle = document.getElementById('rag-toggle');
+    this.closeButton = document.getElementById('rag-close');
+    this.form = document.getElementById('rag-form');
+    this.input = document.getElementById('rag-question');
+    this.submit = document.getElementById('rag-submit');
+    this.messages = document.getElementById('rag-messages');
+    if (!this.root || !this.toggle || !this.form || !this.messages) return;
+    this.initialized = true;
+    this.toggle.addEventListener('click', () => this.setOpen(!this.open));
+    this.closeButton?.addEventListener('click', () => this.setOpen(false));
+    this.form.addEventListener('submit', event => {
+      event.preventDefault();
+      this.ask();
+    });
+    this.addMessage('assistant', 'Estoy listo para responder con fuentes del OVA cuando ingreses al piloto.');
+  },
+  setOpen(value) {
+    this.open = Boolean(value);
+    this.root.classList.toggle('is-open', this.open);
+    this.toggle.setAttribute('aria-expanded', String(this.open));
+    if (this.open) window.setTimeout(() => this.input?.focus(), 80);
+  },
+  addMessage(role, text, citations = []) {
+    const item = document.createElement('div');
+    item.className = `rag-message ${role === 'user' ? 'is-user' : 'is-assistant'} rounded-xl p-3`;
+    const paragraph = document.createElement('p');
+    paragraph.className = 'leading-relaxed';
+    paragraph.textContent = text;
+    item.appendChild(paragraph);
+    citations.slice(0, 3).forEach((citation, index) => {
+      const cite = document.createElement('div');
+      cite.className = 'rag-citation mt-3 rounded-lg px-3 py-2 text-xs text-slate-200';
+      const title = document.createElement('strong');
+      title.className = 'block text-baq-amarillo';
+      title.textContent = `[${index + 1}] ${citation.title} · ${citation.locator}`;
+      const snippet = document.createElement('span');
+      snippet.textContent = citation.snippet;
+      cite.appendChild(title);
+      cite.appendChild(snippet);
+      item.appendChild(cite);
+    });
+    this.messages.appendChild(item);
+    this.messages.scrollTop = this.messages.scrollHeight;
+  },
+  async ask() {
+    const question = (this.input?.value || '').trim();
+    if (!question || this.busy) return;
+    if (!BackendSync.token) {
+      this.addMessage('assistant', 'Ingresa primero con una identidad de prueba para activar el chat.');
+      this.setOpen(true);
+      return;
+    }
+    this.busy = true;
+    this.submit.disabled = true;
+    this.addMessage('user', question);
+    this.input.value = '';
+    try {
+      const response = await BackendSync.request('/v1/rag/chat', {
+        method: 'POST',
+        body: JSON.stringify({ question })
+      });
+      this.addMessage('assistant', response.answer, response.citations || []);
+    } catch (error) {
+      this.addMessage('assistant', `No pude responder ahora: ${error.message}.`);
+    } finally {
+      this.busy = false;
+      this.submit.disabled = false;
     }
   }
 };
@@ -7222,6 +7377,7 @@ const App = {
     LibraryResources.init();
     ResourceTracker.init();
     AcronymGlossary.decorate();
+    RagAssistant.init();
     document.getElementById('sidebar-user-name').textContent = AppState.user.name || 'Servidor público';
     document.getElementById('sidebar-user-meta').textContent = AppState.user.process ? `Proceso: ${AppState.user.process}` : 'Ruta de aprendizaje institucional';
     const sidebarLevel = document.getElementById('sidebar-user-level');
@@ -7375,6 +7531,7 @@ window.addEventListener('DOMContentLoaded', () => {
   Object.keys(Database).forEach(k => Quiz.render(k));
   M1.init(); ModuleLearning.initAll(); M3.init(); M4.init(); M5.init(); LibraryResources.init(); ResourceTracker.init(); ModuleJourney.init();
   AcronymGlossary.decorate();
+  RagAssistant.init();
   MobileNav.sync();
   if (PreviewMode.isRecognition()) PreviewMode.openRecognition();
 });
