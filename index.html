@@ -4666,6 +4666,7 @@ const AppState = {
 MODULES.forEach(m => { AppState.modules[m.id] = { score: 0, completed: false, resourceAccess: false, resourceTypes: [] }; });
 
 const BackendSync = {
+  apiBaseUrl: window.location.protocol === 'file:' ? 'http://127.0.0.1:8000' : '',
   courseId: 'modelo-tres-lineas',
   courseVersion: 'pilot-1',
   token: null,
@@ -4677,7 +4678,7 @@ const BackendSync = {
     const headers = new Headers(options.headers || {});
     if (this.token) headers.set('Authorization', `Bearer ${this.token}`);
     if (options.body) headers.set('Content-Type', 'application/json');
-    const response = await fetch(path, { ...options, headers, cache: 'no-store' });
+    const response = await fetch(`${this.apiBaseUrl}${path}`, { ...options, headers, cache: 'no-store' });
     if (!response.ok) {
       const detail = await response.json().catch(() => ({}));
       throw new Error(detail.detail || `El servidor respondió ${response.status}`);

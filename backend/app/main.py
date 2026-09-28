@@ -54,10 +54,15 @@ def create_app(settings=None, engine=None):
     app.state.settings = settings
     app.state.engine = engine
 
-    if settings.cors_origins:
+    cors_origins = list(settings.cors_origins)
+    if settings.app_env == "development" and "null" not in cors_origins:
+        # Browsers report a local file:// page with the special Origin value "null".
+        cors_origins.append("null")
+
+    if cors_origins:
         app.add_middleware(
             CORSMiddleware,
-            allow_origins=settings.cors_origins,
+            allow_origins=cors_origins,
             allow_credentials=False,
             allow_methods=["GET", "PUT", "POST"],
             allow_headers=["Authorization", "Content-Type", "X-Dev-Test-Secret"],
